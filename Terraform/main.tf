@@ -1,15 +1,18 @@
 provider "azurerm" {
   features {}
 }
-# Resource Group
 
+#-----------------------------
+# Resource Group
+#-----------------------------
 resource "azurerm_resource_group" "rg" {
   name     = "loglakehouse-rg"
   location = "East US"
 }
 
+#-----------------------------
 # Storage Account with Data Lake Gen2
-
+#-----------------------------
 resource "azurerm_storage_account" "lake" {
   name                     = "loglakehouse${random_integer.rand.result}"
   resource_group_name      = azurerm_resource_group.rg.name
@@ -24,8 +27,9 @@ resource "random_integer" "rand" {
   max = 99999
 }
 
+#-----------------------------
 # Event Hub Namespace & Hub
-
+#-----------------------------
 resource "azurerm_eventhub_namespace" "eh_ns" {
   name                = "loglakehouse-ehns"
   location            = azurerm_resource_group.rg.location
@@ -43,8 +47,9 @@ resource "azurerm_eventhub" "eh" {
   message_retention   = 1
 }
 
+#-----------------------------
 # Azure Function App
-
+#-----------------------------
 resource "azurerm_storage_account" "func_storage" {
   name                     = "logfunctf${random_integer.rand.result}"
   resource_group_name      = azurerm_resource_group.rg.name
@@ -84,8 +89,9 @@ resource "azurerm_function_app" "function" {
   }
 }
 
+#-----------------------------
 # Azure Synapse Analytics (Serverless SQL Pool)
-
+#-----------------------------
 resource "azurerm_synapse_workspace" "synapse" {
   name                                 = "loglakehousews"
   resource_group_name                  = azurerm_resource_group.rg.name
@@ -109,8 +115,9 @@ resource "azurerm_key_vault" "kv" {
 
 data "azurerm_client_config" "current" {}
 
+#-----------------------------
 # Azure Monitor (Log Analytics)
-
+#-----------------------------
 resource "azurerm_log_analytics_workspace" "law" {
   name                = "loglakehouse-law"
   location            = azurerm_resource_group.rg.location
