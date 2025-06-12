@@ -6,7 +6,7 @@ provider "azurerm" {
 # Resource Group
 #-----------------------------
 resource "azurerm_resource_group" "rg" {
-  name     = "loglakehouse-rg"
+  name     = "datalake-rg"
   location = "East US"
 }
 
@@ -14,7 +14,7 @@ resource "azurerm_resource_group" "rg" {
 # Storage Account with Data Lake Gen2
 #-----------------------------
 resource "azurerm_storage_account" "lake" {
-  name                     = "loglakehouse${random_integer.rand.result}"
+  name                     = "datalake${random_integer.rand.result}"
   resource_group_name      = azurerm_resource_group.rg.name
   location                 = azurerm_resource_group.rg.location
   account_tier             = "Standard"
@@ -31,7 +31,7 @@ resource "random_integer" "rand" {
 # Event Hub Namespace & Hub
 #-----------------------------
 resource "azurerm_eventhub_namespace" "eh_ns" {
-  name                = "loglakehouse-ehns"
+  name                = "datalake-ehns"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   sku                 = "Basic"
@@ -93,7 +93,7 @@ resource "azurerm_function_app" "function" {
 # Azure Synapse Analytics (Serverless SQL Pool)
 #-----------------------------
 resource "azurerm_synapse_workspace" "synapse" {
-  name                                 = "loglakehousews"
+  name                                 = "datalakews"
   resource_group_name                  = azurerm_resource_group.rg.name
   location                             = azurerm_resource_group.rg.location
   storage_data_lake_gen2_filesystem_id = "${azurerm_storage_account.lake.id}/filesystem/default"
@@ -104,7 +104,7 @@ resource "azurerm_synapse_workspace" "synapse" {
 # Azure Key Vault
 
 resource "azurerm_key_vault" "kv" {
-  name                        = "loglakehousekv"
+  name                        = "datalakekv"
   location                    = azurerm_resource_group.rg.location
   resource_group_name         = azurerm_resource_group.rg.name
   tenant_id                   = data.azurerm_client_config.current.tenant_id
@@ -119,7 +119,7 @@ data "azurerm_client_config" "current" {}
 # Azure Monitor (Log Analytics)
 #-----------------------------
 resource "azurerm_log_analytics_workspace" "law" {
-  name                = "loglakehouse-law"
+  name                = "datalake-law"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   sku                 = "PerGB2018"

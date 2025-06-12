@@ -10,12 +10,12 @@ variable "location" {
 
 variable "resource_group_name" {
   type    = string
-  default = "loglakehouse-rg"
+  default = "datalake-rg"
 }
 
 variable "eventhub_namespace_name" {
   type    = string
-  default = "loglakehouse-ehns"
+  default = "datalake-ehns"
 }
 
 variable "eventhub_name" {
@@ -35,7 +35,7 @@ variable "function_plan_name" {
 
 variable "storage_account_name_prefix" {
   type    = string
-  default = "loglakehouse"
+  default = "datalake"
 }
 
 variable "function_storage_account_name_prefix" {
@@ -45,7 +45,7 @@ variable "function_storage_account_name_prefix" {
 
 variable "synapse_workspace_name" {
   type    = string
-  default = "loglakehousews"
+  default = "datalakews"
 }
 
 variable "synapse_sql_admin" {
@@ -60,10 +60,10 @@ variable "synapse_sql_password" {
 
 variable "key_vault_name" {
   type    = string
-  default = "loglakehousekv"
+  default = "datalakekv"
 }
 
 variable "log_analytics_workspace_name" {
   type    = string
-  default = "loglakehouse-law"
+  default = "datalake-law"
 }
