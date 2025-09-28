@@ -1,1 +1,10 @@
 # file
+location              = "eastus"
+resource_group_name   = "rg-log-lakehouse"
+storage_account_name  = "stloglakehouse"
+eventhub_namespace    = "ehloglakehouse"
+eventhub_name         = "logs-hub"
+function_app_name     = "func-log-normalizer"
+data_lake_name        = "dlsloglakehouse"
+synapse_name          = "synloglakehouse"
+key_vault_name        = "kvloglakehouse"
